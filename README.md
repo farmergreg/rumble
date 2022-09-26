@@ -21,8 +21,8 @@ To check the cards on your system run:
 cat /proc/asound/cards
 ````
 
-Then edit /etc/asound.conf and change the number 1 to the card number that you want to use.
-If the file is blank, it is ok to edit it and add new text:
+Then edit /etc/asound.conf and add the text below:
+In this example, we are using card number 1 as our default card:
 
 ````
 defaults.pcm.card 1
