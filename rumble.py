@@ -3,6 +3,7 @@
 # License: MIT
 
 import argparse
+import datetime
 import pyaudio
 import pymumble_py3
 from pymumble_py3.constants import *
@@ -26,26 +27,31 @@ IsConnected = Event()
 ExitNowPlease = Event()
 
 ###############################################################################
-## Event Handlers
+## Event Handlers & Functions
 ###############################################################################
+def Log(message):
+    print(datetime.datetime.now().strftime('[%Y-%m-%d %H:%M:%S]: ') + message)
+
 def OnCtrlC(signum, frame):
     ExitNowPlease.set()
 
 def OnConnected():
         IsConnected.set()
-        print("Connected.")
+        Log(f"Connected to: {MyArgs.server}:{MyArgs.port} as {MyArgs.username}")
         mumble.channels.find_by_name(MyArgs.channel).move_in()
+        Log(f"Joined channel: {MyArgs.channel}")
 
 def OnDisconnected():
     IsConnected.clear()
-    print("Server Disconnected.")
+    Log(f"Disconnected from: {MyArgs.server}:{MyArgs.port}")
 
     if not ExitNowPlease.is_set():
-        print("Attempting to reconnect...")
+        Log("Attempting to reconnect...")
 
 ###############################################################################
 ## Main Program
 ###############################################################################
+Log("rumble is starting up...")
 pyAudioBufferSize=1024
 p = pyaudio.PyAudio()
 stream = p.open(format=pyaudio.paInt16, channels=1, rate=48000, input=True, output=False, frames_per_buffer=pyAudioBufferSize)
@@ -57,6 +63,7 @@ mumble.start()
 mumble.callbacks.set_callback(PYMUMBLE_CLBK_CONNECTED, OnConnected)
 mumble.callbacks.set_callback(PYMUMBLE_CLBK_DISCONNECTED, OnDisconnected)
 mumble.is_ready()
+Log("ready to rumble")
 
 while not ExitNowPlease.is_set():
     data = stream.read(pyAudioBufferSize, exception_on_overflow=False)
