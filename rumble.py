@@ -33,6 +33,7 @@ def Log(message):
     print(datetime.datetime.now().strftime('[%Y-%m-%d %H:%M:%S]: ') + message)
 
 def OnCtrlC(signum, frame):
+    print()
     ExitNowPlease.set()
 
 def OnConnected():
