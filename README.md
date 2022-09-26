@@ -21,7 +21,7 @@ To check the cards on your system run:
 cat /proc/asound/cards
 ````
 
-Then edit /etc/asound.conf and add the text below:
+Then edit /etc/asound.conf and add the text below.
 In this example, we are using card number 1 as our default card:
 
 ````
