@@ -9,16 +9,13 @@ import pyaudio
 import argparse
 
 parser = argparse.ArgumentParser(prog='rumble', description='rumble streams audio from your microphone input')
-
-parser.add_argument('--cert-key', nargs='?',  dest='certkey', default=None, help='PEM encoded private key certificate')
 parser.add_argument('--cert-file', nargs='?',  dest='certfile', default=None, help='PEM encoded public key certificate')
+parser.add_argument('--cert-key', nargs='?',  dest='certkey', default=None, help='PEM encoded private key certificate')
 parser.add_argument('--channel', nargs='?',  dest='channel', default='', help='the channel to join')
-parser.add_argument('--insecure',  dest='insecure', action='store_true', help='skip server certificate verification')
-parser.add_argument('--password', nargs='?',  dest='password', default=None ,help='mumble server password')
-parser.add_argument('--server', nargs='?',  dest='server', default='localhost', help='the server to connect to (default "localhost")')
+parser.add_argument('--password', nargs='?',  dest='password', default='' ,help='mumble server password')
 parser.add_argument('--port', nargs='?',  dest='port', default=64738, help='the server to connect to (default "64738")')
+parser.add_argument('--server', nargs='?',  dest='server', default='localhost', help='the server to connect to (default "localhost")')
 parser.add_argument('--username', dest='username', help='the username of the client')
-
 args = parser.parse_args()
 
 pyaudoBufferSize=1024
