@@ -38,33 +38,42 @@ def OnCtrlC(signum, frame):
 
 def OnConnected():
         IsConnected.set()
-        Log(f"Connected to: {MyArgs.server}:{MyArgs.port} as {MyArgs.username}")
+        Log(f'Connected to: {MyArgs.server}:{MyArgs.port} as {MyArgs.username}')
         mumble.channels.find_by_name(MyArgs.channel).move_in()
-        Log(f"Joined channel: {MyArgs.channel}")
+        Log(f'Joined channel: {MyArgs.channel}')
 
 def OnDisconnected():
     IsConnected.clear()
-    Log(f"Disconnected from: {MyArgs.server}:{MyArgs.port}")
+    Log(f'Disconnected from: {MyArgs.server}:{MyArgs.port}')
 
     if not ExitNowPlease.is_set():
-        Log("Attempting to reconnect...")
+        Log('Attempting to reconnect...')
 
 ###############################################################################
 ## Main Program
 ###############################################################################
-Log("rumble v1.0.0")
-Log("Copyright 2022 by Gregory L. Dietsche (K9CTS)")
-Log("License: MIT")
+Log(" _______  _____  _____  ____    ____  ______   _____     ________  ")
+Log("|_   __ \|_   _||_   _||_   \  /   _||_   _ \ |_   _|   |_   __  | ")
+Log("  | |__) | | |    | |    |   \/   |    | |_) |  | |       | |_ \_| ")
+Log("  |  __ /  | '    ' |    | |\  /| |    |  __'.  | |   _   |  _| _  ")
+Log(" _| |  \ \_ \ \__/ /    _| |_\/_| |_  _| |__) |_| |__/ | _| |__/ | ")
+Log("|____| |___| `.__.'    |_____||_____||_______/|________||________|")
+Log('rumble v1.0.0')
+Log('Copyright 2022 by Gregory L. Dietsche (K9CTS)')
+Log('License: MIT')
+Log('Initializing audio...')
 pyAudioBufferSize=1024
 p = pyaudio.PyAudio()
 stream = p.open(format=pyaudio.paInt16, channels=1, rate=48000, input=True, output=False, frames_per_buffer=pyAudioBufferSize)
 signal.signal(signal.SIGINT, OnCtrlC)
 
+Log('Initializing mumble client...')
 mumble = pymumble_py3.Mumble(MyArgs.server, MyArgs.username, password=MyArgs.password, port=MyArgs.port, certfile=MyArgs.certfile, keyfile=MyArgs.certkey, reconnect=True)
-mumble.set_application_string("Rumble de K9CTS")
+mumble.set_application_string('Rumble de K9CTS')
 mumble.callbacks.set_callback(PYMUMBLE_CLBK_CONNECTED, OnConnected)
 mumble.callbacks.set_callback(PYMUMBLE_CLBK_DISCONNECTED, OnDisconnected)
 
+Log(f'Initializing Connection to {MyArgs.server}:{MyArgs.port}...')
 mumble.start()
 mumble.is_ready()
 
