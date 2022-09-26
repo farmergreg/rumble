@@ -14,7 +14,7 @@ parser.add_argument('--cert-key', nargs='?',  dest='certkey', default=None, help
 parser.add_argument('--channel', nargs='?',  dest='channel', default='', help='the channel to join')
 parser.add_argument('--password', nargs='?',  dest='password', default='' ,help='mumble server password')
 parser.add_argument('--port', nargs='?',  dest='port', default=64738, help='the server to connect to (default "64738")')
-parser.add_argument('--reconnect',  dest='reconnect', action='store_true', help='reconnect if the connection is lost')
+parser.add_argument('--reconnect',  dest='reconnect', action='store_true', help='reconnect if the server connection is lost')
 parser.add_argument('--server', nargs='?',  dest='server', default='localhost', help='the server to connect to (default "localhost")')
 parser.add_argument('--username', dest='username', help='the username of the client')
 args = parser.parse_args()
