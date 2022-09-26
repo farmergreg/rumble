@@ -51,7 +51,9 @@ def OnDisconnected():
 ###############################################################################
 ## Main Program
 ###############################################################################
-Log("rumble is starting up...")
+Log("rumble v1.0.0")
+Log("Copyright 2022 by Gregory L. Dietsche (K9CTS)")
+Log("License: MIT")
 pyAudioBufferSize=1024
 p = pyaudio.PyAudio()
 stream = p.open(format=pyaudio.paInt16, channels=1, rate=48000, input=True, output=False, frames_per_buffer=pyAudioBufferSize)
@@ -59,11 +61,11 @@ signal.signal(signal.SIGINT, OnCtrlC)
 
 mumble = pymumble_py3.Mumble(MyArgs.server, MyArgs.username, password=MyArgs.password, port=MyArgs.port, certfile=MyArgs.certfile, keyfile=MyArgs.certkey, reconnect=True)
 mumble.set_application_string("Rumble de K9CTS")
-mumble.start()
 mumble.callbacks.set_callback(PYMUMBLE_CLBK_CONNECTED, OnConnected)
 mumble.callbacks.set_callback(PYMUMBLE_CLBK_DISCONNECTED, OnDisconnected)
+
+mumble.start()
 mumble.is_ready()
-Log("ready to rumble")
 
 while not ExitNowPlease.is_set():
     data = stream.read(pyAudioBufferSize, exception_on_overflow=False)
