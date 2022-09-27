@@ -3,7 +3,7 @@
 # License: MIT
 
 import argparse
-import datetime
+from datetime import datetime, timedelta
 import pyaudio
 import audioop
 import pymumble_py3
@@ -32,7 +32,7 @@ ExitNowPlease = Event()
 ## Event Handlers & Functions
 ###############################################################################
 def Log(message):
-    print(datetime.datetime.now().strftime('[%Y-%m-%d %H:%M:%S]: ') + message)
+    print(datetime.now().strftime('[%Y-%m-%d %H:%M:%S]: ') + message)
 
 def OnCtrlC(signum, frame):
     print()
@@ -82,7 +82,7 @@ mumble.is_ready()
 
 Log(f'Minimum RMS required to trigger audio transmission: {MyArgs.minRMS}')
 peakRMS = 0
-recordUntil = datetime.datetime.now()
+recordUntil = datetime.now()
 while not ExitNowPlease.is_set():
     soundSample = stream.read(pyAudioBufferSize, exception_on_overflow=False)
     rms = audioop.rms(soundSample, 2) #paInt16 is 2 bytes wide
@@ -92,9 +92,9 @@ while not ExitNowPlease.is_set():
         Log(f'New audio peak: {peakRMS}')
 
     if rms>MyArgs.minRMS:
-        recordUntil=datetime.datetime.now()+datetime.timedelta(milliseconds=250)
+        recordUntil=datetime.now()+timedelta(milliseconds=250)
 
-    if IsConnected.is_set() and recordUntil > datetime.datetime.now():
+    if IsConnected.is_set() and recordUntil > datetime.now():
         mumble.sound_output.add_sound(soundSample)
 
 stream.stop_stream()
