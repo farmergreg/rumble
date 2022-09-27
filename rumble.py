@@ -99,6 +99,8 @@ while not ExitNowPlease.is_set():
     if IsConnected.is_set() and recordUntil > datetime.now():
         mumble.sound_output.add_sound(soundSample)
 
+# pressing Ctrl-C will cause this code to execute...
+Log("Shutting Down")
 stream.stop_stream()
 stream.close()
 audio.terminate()
