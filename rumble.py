@@ -69,7 +69,7 @@ Log('License: MIT')
 Log('Initializing audio...')
 pyAudioBufferSize=1024
 audio = pyaudio.PyAudio()
-stream = audio.open(format=pyaudio.paInt16, channels=1, rate=48000, input=True, output=False, frames_per_buffer=pyAudioBufferSize)
+stream = audio.open(format=pyaudio.paInt16, channels=1, rate=48000, input=True, frames_per_buffer=pyAudioBufferSize)
 signal.signal(signal.SIGINT, OnCtrlC)
 
 Log('Initializing mumble client...')
