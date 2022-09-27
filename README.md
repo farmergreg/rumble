@@ -37,3 +37,12 @@ Sample Key Creation:
 openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout private-key.pem -out public-key.pem
 ````
 
+
+# Raspberry PI Installation
+
+Tested with Raspberry PI OS Lite (Debian Bullseye with no desktop environment)
+
+````
+apt install daemontools
+````
+
