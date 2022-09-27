@@ -66,8 +66,8 @@ Log('License: MIT')
 
 Log('Initializing audio...')
 pyAudioBufferSize=1024
-p = pyaudio.PyAudio()
-stream = p.open(format=pyaudio.paInt16, channels=1, rate=48000, input=True, output=False, frames_per_buffer=pyAudioBufferSize)
+audio = pyaudio.PyAudio()
+stream = audio.open(format=pyaudio.paInt16, channels=1, rate=48000, input=True, output=False, frames_per_buffer=pyAudioBufferSize)
 signal.signal(signal.SIGINT, OnCtrlC)
 
 Log('Initializing mumble client...')
@@ -99,4 +99,5 @@ while not ExitNowPlease.is_set():
 
 stream.stop_stream()
 stream.close()
-p.terminate()
+audio.terminate()
+mumble.stop()
