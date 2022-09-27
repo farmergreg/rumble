@@ -80,17 +80,21 @@ Log(f'Initializing connection to {MyArgs.server}:{MyArgs.port}...')
 mumble.start()
 mumble.is_ready()
 
-Log(f'Minimum RMS value required to trigger audio transmission: {MyArgs.minRMS}')
+Log(f'Minimum RMS required to trigger audio transmission: {MyArgs.minRMS}')
 peakRMS = 0
+recordUntil = datetime.datetime.now()
 while not ExitNowPlease.is_set():
     soundSample = stream.read(pyAudioBufferSize, exception_on_overflow=False)
     rms = audioop.rms(soundSample, 2) #paInt16 is 2 bytes wide
 
     if rms>peakRMS:
         peakRMS = rms
-        Log(f'New RMS peak: {peakRMS}')
+        Log(f'New audio peak: {peakRMS}')
 
-    if IsConnected.is_set() and rms>MyArgs.minRMS:
+    if rms>MyArgs.minRMS:
+        recordUntil=datetime.datetime.now()+datetime.timedelta(milliseconds=250)
+
+    if IsConnected.is_set() and recordUntil > datetime.datetime.now():
         mumble.sound_output.add_sound(soundSample)
 
 stream.stop_stream()
