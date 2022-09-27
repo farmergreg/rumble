@@ -82,7 +82,7 @@ Log(f'Initializing connection to {MyArgs.server}:{MyArgs.port}...')
 mumble.start()
 mumble.is_ready()
 
-Log(f'Minimum RMS required to trigger audio transmission: {MyArgs.minRMS}')
+Log(f'Minimum RMS required to transmit audio: {MyArgs.minRMS}')
 peakRMS = 0
 recordUntil = datetime.now()
 while not ExitNowPlease.is_set():
