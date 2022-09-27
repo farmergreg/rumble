@@ -14,7 +14,7 @@ import signal
 argParser = argparse.ArgumentParser(prog='rumble', description='rumble streams audio from your microphone input')
 argParser.add_argument('--cert-file', nargs='?',  dest='certfile', default=None, help='PEM encoded public key certificate')
 argParser.add_argument('--cert-key', nargs='?',  dest='certkey', default=None, help='PEM encoded private key certificate')
-argParser.add_argument('--channel', nargs='?',  dest='channel', default='', help='the channel to join')
+argParser.add_argument('--channel', nargs='?',  dest='channel', default=None, help='the channel to join')
 argParser.add_argument('--password', nargs='?',  dest='password', default='' ,help='mumble server password')
 argParser.add_argument('--port', nargs='?',  dest='port', default=64738, help='the server to connect to (default "64738")')
 argParser.add_argument('--server', nargs='?',  dest='server', default='localhost', help='the server to connect to (default "localhost")')
@@ -41,8 +41,10 @@ def OnCtrlC(signum, frame):
 def OnConnected():
         IsConnected.set()
         Log(f'Connected to {MyArgs.server}:{MyArgs.port} as {MyArgs.username}')
-        mumble.channels.find_by_name(MyArgs.channel).move_in()
-        Log(f'Joined channel {MyArgs.channel}')
+
+        if MyArgs.channel != None:
+            mumble.channels.find_by_name(MyArgs.channel).move_in()
+            Log(f'Joined channel: {MyArgs.channel}')
 
 def OnDisconnected():
     IsConnected.clear()
