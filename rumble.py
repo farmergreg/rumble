@@ -91,7 +91,7 @@ while not ExitNowPlease.is_set():
 
     if rms>peakRMS:
         peakRMS = rms
-        Log(f'New audio peak: {peakRMS}')
+        Log(f'New audio RMS peak: {peakRMS}')
 
     if rms>MyArgs.minRMS:
         recordUntil=datetime.now()+timedelta(milliseconds=250)
