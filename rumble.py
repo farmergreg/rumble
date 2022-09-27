@@ -92,7 +92,7 @@ while not ExitNowPlease.is_set():
         Log(f'New audio peak: {peakRMS}')
 
     if rms>MyArgs.minRMS:
-        recordUntil=datetime.now()+timedelta(milliseconds=250)
+        recordUntil=datetime.now()+timedelta(milliseconds=150)
 
     if IsConnected.is_set() and recordUntil > datetime.now():
         mumble.sound_output.add_sound(soundSample)
