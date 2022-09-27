@@ -85,6 +85,7 @@ mumble.is_ready()
 Log(f'Minimum RMS required to transmit audio: {MyArgs.minRMS}')
 peakRMS = 0
 recordUntil = datetime.now()
+isTransmitting = False
 while not ExitNowPlease.is_set():
     soundSample = stream.read(pyAudioBufferSize, exception_on_overflow=False)
     rms = audioop.rms(soundSample, 2) #paInt16 is 2 bytes wide
@@ -97,7 +98,13 @@ while not ExitNowPlease.is_set():
         recordUntil=datetime.now()+timedelta(milliseconds=250)
 
     if IsConnected.is_set() and recordUntil > datetime.now():
+        if isTransmitting == False:
+            Log("Transmission Started")
+            isTransmitting = True
         mumble.sound_output.add_sound(soundSample)
+    elif isTransmitting:
+        Log("Transmission Ended")
+        isTransmitting = False
 
 # pressing Ctrl-C will cause this code to execute...
 Log("Shutting Down")
