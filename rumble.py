@@ -5,6 +5,7 @@
 import argparse
 import datetime
 import pyaudio
+import audioop
 import pymumble_py3
 from pymumble_py3.constants import *
 from threading import Thread, Event
@@ -18,6 +19,7 @@ argParser.add_argument('--password', nargs='?',  dest='password', default='' ,he
 argParser.add_argument('--port', nargs='?',  dest='port', default=64738, help='the server to connect to (default "64738")')
 argParser.add_argument('--server', nargs='?',  dest='server', default='localhost', help='the server to connect to (default "localhost")')
 argParser.add_argument('--username', dest='username', help='the username of the client')
+argParser.add_argument('--min-rms', dest='minRMS', default=20, help='minimum rms level required to transmit audio (default 20)')
 
 ###############################################################################
 ## Global Variables
@@ -78,10 +80,18 @@ Log(f'Initializing connection to {MyArgs.server}:{MyArgs.port}...')
 mumble.start()
 mumble.is_ready()
 
+Log(f'Minimum RMS value required to trigger audio transmission: {MyArgs.minRMS}')
+peakRMS = 0
 while not ExitNowPlease.is_set():
-    data = stream.read(pyAudioBufferSize, exception_on_overflow=False)
-    if IsConnected.is_set():
-        mumble.sound_output.add_sound(data)
+    soundSample = stream.read(pyAudioBufferSize, exception_on_overflow=False)
+    rms = audioop.rms(soundSample, 2) #paInt16 is 2 bytes wide
+
+    if rms>peakRMS:
+        peakRMS = rms
+        Log(f'New RMS peak: {peakRMS}')
+
+    if IsConnected.is_set() and rms>MyArgs.minRMS:
+        mumble.sound_output.add_sound(soundSample)
 
 stream.stop_stream()
 stream.close()
