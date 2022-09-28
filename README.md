@@ -65,10 +65,38 @@ defaults.pcm.card 1
 defaults.ctl.card 1
 ````
 
-## SSL Key Creation
+# SSL Key Creation
 
 If you want to authenticate using SSL, here is one way to create a self-signed key pair.
 
 ````
 openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout private-key.pem -out public-key.pem
 ````
+
+# Running rumble at system startup
+
+There are many ways to accomplish starting up rumble when your computer boots.
+Here is one simple way:
+
+## First Install tmux:
+````
+sudo apt install tmux
+````
+
+## Edit crontab
+Then edit your crontab and add this line (adjust the path to match where your copy of rumble is):
+
+````
+@reboot /usr/bin/tmux new-session -d -s rumble-bot './rumble/rumble.py --username test-bot --server mumble --port 64738 --password OneBadPassword' >/dev/null 2>&1
+````
+
+## Finally
+Reboot your computer.
+To see the output from your bot run:
+
+````
+tmux attach
+````
+
+When you are done using tmux, press ctrl-b and then ctrl-d to detach.
+
