@@ -78,21 +78,21 @@ openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout private-key.pe
 There are many ways to accomplish starting up rumble when your computer boots.
 Here is one simple way:
 
-## First Install tmux:
+## 1) Install tmux:
 ````
 sudo apt install tmux
 ````
 
-## Edit crontab
+## 2) Edit crontab
 Then edit your crontab and add this line (adjust the path to match where your copy of rumble is):
 
 ````
 @reboot /usr/bin/tmux new-session -d -s rumble-bot './rumble/rumble.py --username test-bot --server mumble --port 64738 --password OneBadPassword' >/dev/null 2>&1
 ````
 
-## Finally
+## 3) Reboot
 Reboot your computer.
-To see the output from your bot run:
+After rebooting, log in and check the output from your bot by running:
 
 ````
 tmux attach
