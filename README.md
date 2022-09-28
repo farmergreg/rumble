@@ -43,6 +43,12 @@ openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout private-key.pe
 Tested with Raspberry PI OS Lite (Debian Bullseye with no desktop environment)
 
 ````
-apt install daemontools
+sudo apt update
+sudo apt install git python3-pip python3-pyaudio opus-tools
+pip install pyaudio
+pip install pymumble
 ````
 
+... maybe ...
+
+apt install daemontools
