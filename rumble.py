@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # Copyright 2022 by Gregory L. Dietsche (K9CTS)
 # License: MIT
+MyVersion = 'v1.0.0'
 
 import argparse
 from datetime import datetime, timedelta
@@ -62,7 +63,7 @@ Log("  | |__) | | |    | |    |   \/   |    | |_) |  | |       | |_ \_| ")
 Log("  |  __ /  | '    ' |    | |\  /| |    |  __'.  | |   _   |  _| _  ")
 Log(" _| |  \ \_ \ \__/ /    _| |_\/_| |_  _| |__) |_| |__/ | _| |__/ | ")
 Log("|____| |___| `.__.'    |_____||_____||_______/|________||________|")
-Log('rumble v1.0.0')
+Log('rumble ' + MyVersion)
 Log('Copyright 2022 by Gregory L. Dietsche (K9CTS)')
 Log('License: MIT')
 
