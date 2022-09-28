@@ -41,7 +41,7 @@ pip install pyaudio
 pip install pymumble
 ````
 
-# Configuring your audio card
+# Audio Card Configuration
 
 If rumble does not transmit any audio, it may be because your audio card isn't set to be the default card.
 To check the cards on your system run:
