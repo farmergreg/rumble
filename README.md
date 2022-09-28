@@ -22,7 +22,7 @@ optional arguments:
                         PEM encoded public key certificate
   --cert-key [CERTKEY]  PEM encoded private key certificate
   --channel [CHANNEL]   the channel to join
-  --pass [PASS]         the server password
+  --password [PASSWORD] the server password
   --port [PORT]         the server to connect to (default "64738")
   --server [SERVER]     the server to connect to (default "localhost")
   --username USERNAME   the username of the client (default "rumble-bot")
