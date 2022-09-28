@@ -73,7 +73,7 @@ If you want to authenticate using SSL, here is one way to create a self-signed k
 openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout private-key.pem -out public-key.pem
 ````
 
-# Running rumble at system startup
+# Starting Rumble Automatically
 
 There are many ways to accomplish starting up rumble when your computer boots.
 Here is one simple way:
@@ -98,5 +98,5 @@ After rebooting, log in and check the output from your bot by running:
 tmux attach
 ````
 
-When you are done using tmux, press ctrl-b and then ctrl-d to detach.
+When you are done using tmux, press ctrl-b and then ctrl-d to detach from your bot (it will continue to run in the background).
 
