@@ -31,8 +31,9 @@ optional arguments:
 
 # Installation
 
-Tested with Raspberry PI OS Lite (Debian Bullseye with no desktop environment).
-Note: to use rumble with a Raspberry PI, you will need a usb sound card.
+These instructions were tested with Raspberry PI OS Lite (Debian Bullseye with no desktop environment).
+You can use any computer that runs linux to run mumble.
+If you happen to use a Raspberry PI, you will need a usb sound card.
 
 ````
 sudo apt update
