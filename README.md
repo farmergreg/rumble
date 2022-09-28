@@ -6,7 +6,7 @@ Rumble is a mumble client that streams audio from your microphone / line input t
 
 Simple example:
 ````
-./rumble.py --server mumble --username test-bot --password OneBadPassword
+./rumble.py --username test-bot --server mumble --port 64738 --password OneBadPassword
 ````
 
 Command Line Options:
@@ -22,8 +22,7 @@ optional arguments:
                         PEM encoded public key certificate
   --cert-key [CERTKEY]  PEM encoded private key certificate
   --channel [CHANNEL]   the channel to join
-  --password [PASSWORD]
-                        mumble server password
+  --pass [PASS]         the server password
   --port [PORT]         the server to connect to (default "64738")
   --server [SERVER]     the server to connect to (default "localhost")
   --username USERNAME   the username of the client (default "rumble-bot")
