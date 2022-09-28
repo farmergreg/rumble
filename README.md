@@ -4,7 +4,8 @@ Rumble is a mumble client that streams audio from your microphone to a mumble se
 
 # Installation
 
-Tested with Raspberry PI OS Lite (Debian Bullseye with no desktop environment)
+Tested with Raspberry PI OS Lite (Debian Bullseye with no desktop environment).
+Note: to use rumble with a Raspberry PI, you will need a usb sound card.
 
 ````
 sudo apt update
