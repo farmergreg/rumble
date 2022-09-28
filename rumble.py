@@ -81,12 +81,12 @@ mumble.callbacks.set_callback(PYMUMBLE_CLBK_DISCONNECTED, OnDisconnected)
 Log(f'Initializing connection to {MyArgs.server}:{MyArgs.port}...')
 mumble.start()
 mumble.is_ready()
-signal.signal(signal.SIGINT, OnCtrlC)
 
 Log(f'Minimum RMS required to transmit audio: {MyArgs.minRMS}')
 peakRMS = 0
 recordUntil = datetime.now()
 isTransmitting = False
+signal.signal(signal.SIGINT, OnCtrlC)
 while not ExitNowPlease.is_set():
     soundSample = stream.read(pyAudioBufferSize, exception_on_overflow=False)
     rms = audioop.rms(soundSample, 2) #paInt16 is 2 bytes wide
