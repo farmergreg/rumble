@@ -4,17 +4,18 @@ Rumble is a mumble client that streams audio from your microphone to a mumble se
 
 # Installation
 
-## Prerequsites
+Tested with Raspberry PI OS Lite (Debian Bullseye with no desktop environment)
+
 ````
-sudo apt install pip
+sudo apt update
+sudo apt install git python3-pip python3-pyaudio opus-tools
+pip install pyaudio
 pip install pymumble
 ````
 
-# Manual
+# Configuring your audio card
 
-## Configuring your audio card
-
-If you hear no audio, it may be because your audio card isn't set to be the default card.
+If rumble does not transmit any audio, it may be because your audio card isn't set to be the default card.
 To check the cards on your system run:
 
 ````
@@ -31,24 +32,8 @@ defaults.ctl.card 1
 
 ## SSL Key Creation
 
-Sample Key Creation:
+If you want to authenticate using SSL, here is one way to create a self-signed key pair.
 
 ````
 openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout private-key.pem -out public-key.pem
 ````
-
-
-# Raspberry PI Installation
-
-Tested with Raspberry PI OS Lite (Debian Bullseye with no desktop environment)
-
-````
-sudo apt update
-sudo apt install git python3-pip python3-pyaudio opus-tools
-pip install pyaudio
-pip install pymumble
-````
-
-... maybe ...
-
-apt install daemontools
