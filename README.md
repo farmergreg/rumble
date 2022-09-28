@@ -2,6 +2,34 @@
 
 Rumble is a mumble client that streams audio from your microphone / line input to a mumble server.
 
+# Using
+
+Simple example:
+````
+./rumble.py --server mumble --username test-bot --password OneBadPassword
+````
+
+Command Line Options:
+````
+usage: rumble [-h] [--cert-file [CERTFILE]] [--cert-key [CERTKEY]] [--channel [CHANNEL]] [--password [PASSWORD]] [--port [PORT]]
+              [--server [SERVER]] [--username USERNAME] [--min-rms MINRMS]
+
+rumble streams audio from your microphone input
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --cert-file [CERTFILE]
+                        PEM encoded public key certificate
+  --cert-key [CERTKEY]  PEM encoded private key certificate
+  --channel [CHANNEL]   the channel to join
+  --password [PASSWORD]
+                        mumble server password
+  --port [PORT]         the server to connect to (default "64738")
+  --server [SERVER]     the server to connect to (default "localhost")
+  --username USERNAME   the username of the client
+  --min-rms MINRMS      minimum rms level required to transmit audio (default 20)
+````
+
 # Installation
 
 Tested with Raspberry PI OS Lite (Debian Bullseye with no desktop environment).
