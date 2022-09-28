@@ -31,8 +31,8 @@ optional arguments:
 
 # Installation
 
-These instructions were tested with Raspberry PI OS Lite (Debian Bullseye with no desktop environment).
 You can use any computer that runs linux to run mumble.
+These instructions were tested with Raspberry PI OS Lite (Debian Bullseye with no desktop environment).
 If you happen to use a Raspberry PI, you will need a usb sound card.
 
 ````
