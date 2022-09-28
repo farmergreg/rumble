@@ -40,6 +40,7 @@ sudo apt update
 sudo apt install git python3-pip python3-pyaudio opus-tools
 pip install pyaudio
 pip install pymumble
+git clone https://github.com/farmergreg/rumble
 ````
 
 # Audio Card Configuration
