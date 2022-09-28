@@ -1,6 +1,6 @@
 # Rumble de K9CTS
 
-Rumble is a mumble client that streams audio from your microphone / line input to a [mumble](https://www.mumble.info/) server.
+Rumble is a [mumble](https://www.mumble.info/) bot that streams audio from your microphone / line input to a [mumble](https://www.mumble.info/) server.
 
 # Using
 
