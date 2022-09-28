@@ -70,7 +70,6 @@ Log('Initializing audio...')
 pyAudioBufferSize=1024
 audio = pyaudio.PyAudio()
 stream = audio.open(format=pyaudio.paInt16, channels=1, rate=48000, input=True, frames_per_buffer=pyAudioBufferSize)
-signal.signal(signal.SIGINT, OnCtrlC)
 
 Log('Initializing mumble client...')
 mumble = pymumble_py3.Mumble(MyArgs.server, MyArgs.username, password=MyArgs.password, port=MyArgs.port, certfile=MyArgs.certfile, keyfile=MyArgs.certkey, reconnect=True)
@@ -81,6 +80,7 @@ mumble.callbacks.set_callback(PYMUMBLE_CLBK_DISCONNECTED, OnDisconnected)
 Log(f'Initializing connection to {MyArgs.server}:{MyArgs.port}...')
 mumble.start()
 mumble.is_ready()
+signal.signal(signal.SIGINT, OnCtrlC)
 
 Log(f'Minimum RMS required to transmit audio: {MyArgs.minRMS}')
 peakRMS = 0
