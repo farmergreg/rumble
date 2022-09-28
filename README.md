@@ -26,7 +26,7 @@ optional arguments:
                         mumble server password
   --port [PORT]         the server to connect to (default "64738")
   --server [SERVER]     the server to connect to (default "localhost")
-  --username USERNAME   the username of the client
+  --username USERNAME   the username of the client (default "rumble-bot")
   --min-rms MINRMS      minimum rms level required to transmit audio (default 20)
 ````
 

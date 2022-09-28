@@ -18,7 +18,7 @@ argParser.add_argument('--channel', nargs='?',  dest='channel', default=None, he
 argParser.add_argument('--password', nargs='?',  dest='password', default='' ,help='mumble server password')
 argParser.add_argument('--port', nargs='?',  dest='port', default=64738, help='the server to connect to (default "64738")')
 argParser.add_argument('--server', nargs='?',  dest='server', default='localhost', help='the server to connect to (default "localhost")')
-argParser.add_argument('--username', dest='username', help='the username of the client')
+argParser.add_argument('--username', dest='username', default='rumble-bot', help='the username of the client (default "rumble-bot")')
 argParser.add_argument('--min-rms', dest='minRMS', default=20, help='minimum rms level required to transmit audio (default 20)')
 
 ###############################################################################
