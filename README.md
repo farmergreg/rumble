@@ -39,7 +39,6 @@ If you happen to use a Raspberry PI, you will need a usb sound card.
 # Install
 sudo apt update
 sudo apt install git python3-pip python3-pyaudio opus-tools
-pip install pyaudio
 pip install pymumble
 git clone https://github.com/farmergreg/rumble
 
