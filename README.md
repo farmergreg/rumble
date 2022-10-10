@@ -86,7 +86,7 @@ sudo apt install tmux
 Then edit your crontab and add this line (adjust the path to match where your copy of rumble is):
 
 ````
-@reboot /usr/bin/tmux new-session -d -s rumble-bot './rumble/rumble.py --username test-bot --server mumble --port 64738 --password OneBadPassword' >/dev/null 2>&1
+@reboot /usr/bin/tmux new-session -d -s rumble-bot '/home/pi/rumble/rumble.py --username test-bot --server mumble --port 64738 --password YourServerPasswordGoesHere' >/dev/null 2>&1
 ````
 
 ## 3) Reboot
