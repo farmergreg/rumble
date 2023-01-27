@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # Copyright 2023 by Gregory L. Dietsche (K9CTS)
 # License: MIT
-MyVersion = 'v1.0.0'
+MyVersion = 'v1.0.1'
 
 import argparse
 from datetime import datetime, timedelta
