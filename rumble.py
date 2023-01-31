@@ -20,7 +20,7 @@ argParser.add_argument('--password', nargs='?',  dest='password', default='' ,he
 argParser.add_argument('--port', nargs='?',  dest='port', default=64738, help='the server to connect to (default "64738")', type=int)
 argParser.add_argument('--server', nargs='?',  dest='server', default='localhost', help='the server to connect to (default "localhost")')
 argParser.add_argument('--username', dest='username', default='rumble-bot', help='the username of the client (default "rumble-bot")')
-argParser.add_argument('--min-rms', dest='minRMS', default=80, help='minimum rms level required to transmit audio (default 80)', type=int)
+argParser.add_argument('--min-rms', dest='minRMS', default=150, help='minimum rms level required to transmit audio (default 150)', type=int)
 
 ###############################################################################
 ## Global Variables
