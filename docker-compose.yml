@@ -1,0 +1,6 @@
+services:
+  rumble-bot:
+    build:
+      context: .
+    env_file:
+      - .env
