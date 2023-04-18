@@ -2,5 +2,19 @@ services:
   rumble-bot:
     build:
       context: .
+    # privileged: true
+    volumes:
+      - /etc/asound.conf:/etc/asound.conf:ro
+    devices:
+      - /dev/snd:/dev/snd
+      # - /dev/snd/controlC0:/dev/snd/controlC0
+      # - /dev/snd/controlC1:/dev/snd/controlC1
+      # - /dev/snd/controlC2:/dev/snd/controlC2
+      # - /dev/snd/controlC3:/dev/snd/controlC3
+      # - /dev/snd/pcmC0D0p:/dev/snd/pcmC0D0p
+      # - /dev/snd/pcmC1D0p:/dev/snd/pcmC1D0p
+      # - /dev/snd/pcmC2D0p:/dev/snd/pcmC2D0p
+      # - /dev/snd/pcmC3D0c:/dev/snd/pcmC3D0c
+      # - /dev/snd/pcmC3D0p:/dev/snd/pcmC3D0p
     env_file:
       - .env
