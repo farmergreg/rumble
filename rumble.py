@@ -93,6 +93,7 @@ peakRMS = 0
 recordUntil = datetime.now()
 isTransmitting = False
 signal.signal(signal.SIGINT, OnCtrlC)
+signal.signal(signal.SIGTERM, OnCtrlC)
 while not ExitNowPlease.is_set():
     soundSample = stream.read(pyAudioBufferSize, exception_on_overflow=False)
     rms = audioop.rms(soundSample, 2) #paInt16 is 2 bytes wide
