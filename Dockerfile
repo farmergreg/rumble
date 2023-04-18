@@ -4,7 +4,6 @@ RUN apt-get update && apt-get install -y \
   python3-pip \
   python3-pyaudio \
   opus-tools \
-  alsa-base alsa-utils \
   && rm -rf /var/lib/apt/lists/*
 
 RUN pip install pymumble
