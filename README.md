@@ -9,7 +9,7 @@ Simple example:
 ./rumble.py --username test-bot --server mumble --port 64738 --password OneBadPassword
 ````
 
-Command Line Options:
+## Command Line Options:
 ````
 usage: rumble [-h] [--cert-file [CERTFILE]] [--cert-key [CERTKEY]] [--channel [CHANNEL]] [--password [PASSWORD]] [--port [PORT]]
               [--server [SERVER]] [--username USERNAME] [--min-rms MINRMS]
@@ -27,6 +27,21 @@ optional arguments:
   --server [SERVER]     the server to connect to (default "localhost")
   --username USERNAME   the username of the client (default "rumble-bot")
   --min-rms MINRMS      minimum rms level required to transmit audio (default 150)
+````
+
+## Environment Variables:
+Command line parameters take precedence over environment variables.
+The following environment variables are supported:
+
+````
+RUMBLE_CERTFILE=
+RUMBLE_CERTKEY=
+RUMBLE_CHANNEL=
+RUMBLE_PASSWORD=
+RUMBLE_PORT=64738
+RUMBLE_SERVER=localhost
+RUMBLE_USERNAME=rumble-bot
+RUMBLE_MINRMS=150
 ````
 
 # Installation

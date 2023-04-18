@@ -3,6 +3,7 @@
 # License: MIT
 MyVersion = 'v1.0.1'
 
+import os
 import argparse
 from datetime import datetime, timedelta
 import pyaudio
@@ -13,14 +14,14 @@ from threading import Thread, Event
 import signal
 
 argParser = argparse.ArgumentParser(prog='rumble', description='rumble streams audio from your microphone input')
-argParser.add_argument('--cert-file', nargs='?',  dest='certfile', default=None, help='PEM encoded public key certificate')
-argParser.add_argument('--cert-key', nargs='?',  dest='certkey', default=None, help='PEM encoded private key certificate')
-argParser.add_argument('--channel', nargs='?',  dest='channel', default=None, help='the channel to join')
-argParser.add_argument('--password', nargs='?',  dest='password', default='' ,help='the server password')
-argParser.add_argument('--port', nargs='?',  dest='port', default=64738, help='the server to connect to (default "64738")', type=int)
-argParser.add_argument('--server', nargs='?',  dest='server', default='localhost', help='the server to connect to (default "localhost")')
-argParser.add_argument('--username', dest='username', default='rumble-bot', help='the username of the client (default "rumble-bot")')
-argParser.add_argument('--min-rms', dest='minRMS', default=150, help='minimum rms level required to transmit audio (default 150)', type=int)
+argParser.add_argument('--cert-file', nargs='?',  dest='certfile', default=os.getenv('RUMBLE_CERTFILE'),              help='PEM encoded public key certificate')
+argParser.add_argument('--cert-key',  nargs='?',  dest='certkey',  default=os.getenv('RUMBLE_CERTKEY'),               help='PEM encoded private key certificate')
+argParser.add_argument('--channel',   nargs='?',  dest='channel',  default=os.getenv('RUMBLE_CHANNEL'),               help='the channel to join')
+argParser.add_argument('--password',  nargs='?',  dest='password', default=os.getenv('RUMBLE_PASSWORD', ''),          help='the server password')
+argParser.add_argument('--port',      nargs='?',  dest='port',     default=os.getenv('RUMBLE_PORT', 64738),           help='the server to connect to (default "64738")',                 type=int)
+argParser.add_argument('--server',    nargs='?',  dest='server',   default=os.getenv('RUMBLE_SERVER', 'localhost'),   help='the server to connect to (default "localhost")')
+argParser.add_argument('--username',              dest='username', default=os.getenv('RUMBLE_USERNAME', 'rumble-bot'),help='the username of the client (default "rumble-bot")')
+argParser.add_argument('--min-rms',               dest='minRMS',   default=os.getenv('RUMBLE_MINRMS', 150),           help='minimum rms level required to transmit audio (default 150)', type=int)
 
 ###############################################################################
 ## Global Variables
@@ -66,6 +67,11 @@ Log("|____| |___| `.__.'    |_____||_____||_______/|________||________|")
 Log('rumble ' + MyVersion)
 Log('Copyright 2023 by Gregory L. Dietsche (K9CTS)')
 Log('License: MIT')
+Log('')
+Log('Parameters:')
+for curArg in vars(MyArgs):
+    Log(f'{curArg}\t: {getattr(MyArgs, curArg)}')
+Log('')
 
 Log('Initializing audio...')
 pyAudioBufferSize=1024
