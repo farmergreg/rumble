@@ -28,8 +28,6 @@ argParser.add_argument('--webhook-watchdog-interval', dest='webhook_watchdog_int
 argParser.add_argument('--webhook-watchdog-up',       dest='webhook_watchdog_up',      default=os.getenv('RUMBLE_WEBHOOK_WATCHDOG_UP'),   help='URL to GET periodically when connected')
 argParser.add_argument('--webhook-watchdog-down',     dest='webhook_watchdog_down',    default=os.getenv('RUMBLE_WEBHOOK_WATCHDOG_DOWN'), help='URL to GET periodically when disconnected')
 
-
-
 ###############################################################################
 ## Global Variables
 ###############################################################################
