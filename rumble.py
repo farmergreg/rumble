@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-# Copyright 2023 by Gregory L. Dietsche (K9CTS)
+# Copyright 2024 by Gregory L. Dietsche
 # License: MIT
-MyVersion = 'v1.0.2'
+MyVersion = 'v1.1.0'
 
 import os
 import argparse
@@ -12,16 +12,19 @@ import pymumble_py3
 from pymumble_py3.constants import *
 from threading import Thread, Event
 import signal
+import requests
 
 argParser = argparse.ArgumentParser(prog='rumble', description='rumble streams audio from your microphone input')
-argParser.add_argument('--cert-file', nargs='?',  dest='certfile', default=os.getenv('RUMBLE_CERTFILE'),              help='PEM encoded public key certificate')
-argParser.add_argument('--cert-key',  nargs='?',  dest='certkey',  default=os.getenv('RUMBLE_CERTKEY'),               help='PEM encoded private key certificate')
-argParser.add_argument('--channel',   nargs='?',  dest='channel',  default=os.getenv('RUMBLE_CHANNEL'),               help='the channel to join')
-argParser.add_argument('--password',  nargs='?',  dest='password', default=os.getenv('RUMBLE_PASSWORD', ''),          help='the server password')
-argParser.add_argument('--port',      nargs='?',  dest='port',     default=os.getenv('RUMBLE_PORT', 64738),           help='the server to connect to (default "64738")',                 type=int)
-argParser.add_argument('--server',    nargs='?',  dest='server',   default=os.getenv('RUMBLE_SERVER', 'localhost'),   help='the server to connect to (default "localhost")')
-argParser.add_argument('--username',              dest='username', default=os.getenv('RUMBLE_USERNAME', 'rumble-bot'),help='the username of the client (default "rumble-bot")')
-argParser.add_argument('--min-rms',               dest='minRMS',   default=os.getenv('RUMBLE_MINRMS', 150),           help='minimum rms level required to transmit audio (default 150)', type=int)
+argParser.add_argument('--cert-file', nargs='?',  dest='certfile',           default=os.getenv('RUMBLE_CERTFILE'),              help='PEM encoded public key certificate')
+argParser.add_argument('--cert-key',  nargs='?',  dest='certkey',            default=os.getenv('RUMBLE_CERTKEY'),               help='PEM encoded private key certificate')
+argParser.add_argument('--channel',   nargs='?',  dest='channel',            default=os.getenv('RUMBLE_CHANNEL'),               help='the channel to join')
+argParser.add_argument('--password',  nargs='?',  dest='password',           default=os.getenv('RUMBLE_PASSWORD', ''),          help='the server password')
+argParser.add_argument('--port',      nargs='?',  dest='port',               default=os.getenv('RUMBLE_PORT', 64738),           help='the server to connect to (default "64738")',                 type=int)
+argParser.add_argument('--server',    nargs='?',  dest='server',             default=os.getenv('RUMBLE_SERVER', 'localhost'),   help='the server to connect to (default "localhost")')
+argParser.add_argument('--username',              dest='username',           default=os.getenv('RUMBLE_USERNAME', 'rumble-bot'),help='the username of the client (default "rumble-bot")')
+argParser.add_argument('--min-rms',               dest='minRMS',             default=os.getenv('RUMBLE_MINRMS', 150),           help='minimum rms level required to transmit audio (default 150)', type=int)
+argParser.add_argument('--webhook-connect',       dest='webhook_connect',    default=os.getenv('RUMBLE_WEBHOOK_CONNECT'),       help='URL to GET on connect')
+argParser.add_argument('--webhook-disconnect',    dest='webhook_disconnect', default=os.getenv('RUMBLE_WEBHOOK_DISCONNECT'),    help='URL to GET on disconnect')
 
 ###############################################################################
 ## Global Variables
@@ -48,9 +51,24 @@ def OnConnected():
             mumble.channels.find_by_name(MyArgs.channel).move_in()
             Log(f'Joined channel: {MyArgs.channel}')
 
+        if MyArgs.webhook_connect:
+            try:
+                response = requests.get(MyArgs.webhook_connect)
+                Log(f'Webhook CONNECT response: {response.status_code} {response.text}')
+            except requests.RequestException as e:
+                Log(f'Error calling CONNECT webhook: {e}')
+
+
 def OnDisconnected():
     IsConnected.clear()
     Log(f'Disconnected from {MyArgs.server}:{MyArgs.port}')
+
+    if MyArgs.webhook_disconnect:
+        try:
+            response = requests.get(MyArgs.webhook_disconnect)
+            Log(f'Webhook DISCONNECT response: {response.status_code} {response.text}')
+        except requests.RequestException as e:
+            Log(f'Error calling DISCONNECT webhook: {e}')
 
     if not ExitNowPlease.is_set():
         Log('Attempting to reconnect...')
@@ -65,7 +83,7 @@ Log("  |  __ /  | '    ' |    | |\  /| |    |  __'.  | |   _   |  _| _  ")
 Log(" _| |  \ \_ \ \__/ /    _| |_\/_| |_  _| |__) |_| |__/ | _| |__/ | ")
 Log("|____| |___| `.__.'    |_____||_____||_______/|________||________|")
 Log('rumble ' + MyVersion)
-Log('Copyright 2023 by Gregory L. Dietsche (K9CTS)')
+Log('Copyright 2024 by Gregory L. Dietsche')
 Log('License: MIT')
 Log('')
 Log('Parameters:')
@@ -80,7 +98,7 @@ stream = audio.open(format=pyaudio.paInt16, channels=1, rate=48000, input=True, 
 
 Log('Initializing mumble client...')
 mumble = pymumble_py3.Mumble(MyArgs.server, MyArgs.username, password=MyArgs.password, port=MyArgs.port, certfile=MyArgs.certfile, keyfile=MyArgs.certkey, reconnect=True)
-mumble.set_application_string('Rumble de K9CTS')
+mumble.set_application_string('Rumble by Gregory L. Dietsche')
 mumble.callbacks.set_callback(PYMUMBLE_CLBK_CONNECTED, OnConnected)
 mumble.callbacks.set_callback(PYMUMBLE_CLBK_DISCONNECTED, OnDisconnected)
 

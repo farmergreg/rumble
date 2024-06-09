@@ -27,6 +27,8 @@ optional arguments:
   --server [SERVER]     the server to connect to (default "localhost")
   --username USERNAME   the username of the client (default "rumble-bot")
   --min-rms MINRMS      minimum rms level required to transmit audio (default 150)
+  --webhook-connect     URL to GET on connect
+  --webhook-disconnect  URL to GET on disconnect
 ````
 
 ## Environment Variables:
@@ -42,6 +44,8 @@ RUMBLE_PORT=64738
 RUMBLE_SERVER=localhost
 RUMBLE_USERNAME=rumble-bot
 RUMBLE_MINRMS=150
+RUMBLE_WEBHOOK_CONNECT=
+RUMBLE_WEBHOOK_DISCONNECT=
 ````
 
 # Installation
