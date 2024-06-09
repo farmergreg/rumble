@@ -58,7 +58,7 @@ If you happen to use a Raspberry PI, you will need a usb sound card.
 # Install
 sudo apt update
 sudo apt install git python3-pip python3-pyaudio opus-tools
-pip install pymumble
+pip install pymumble #--break-system-packages
 git clone https://github.com/farmergreg/rumble
 
 # Run the bot (change the parameters to suit your needs)
@@ -88,7 +88,7 @@ defaults.ctl.card 1
 If you want to authenticate using SSL, here is one way to create a self-signed key pair.
 
 ````
-openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout private-key.pem -out public-key.pem
+openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout private-cert-key.pem -out public-key-cert-file.pem
 ````
 
 # Starting Rumble Automatically
