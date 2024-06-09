@@ -24,7 +24,7 @@ argParser.add_argument('--port',      nargs='?',      dest='port',              
 argParser.add_argument('--server',    nargs='?',      dest='server',                   default=os.getenv('RUMBLE_SERVER', 'localhost'),   help='the server to connect to (default "localhost")')
 argParser.add_argument('--username',                  dest='username',                 default=os.getenv('RUMBLE_USERNAME', 'rumble-bot'),help='the username of the client (default "rumble-bot")')
 argParser.add_argument('--min-rms',                   dest='minRMS',                   default=os.getenv('RUMBLE_MINRMS', 150),           help='minimum rms level required to transmit audio (default 150)', type=int)
-argParser.add_argument('--webhook-watchdog-interval', dest='webhook_watchdog_interval',default=int(os.getenv('RUMBLE_WEBHOOK_WATCHDOG_INTERVAL', 300)), help='Interval in seconds for the watchdog to check the connection', type=int)
+argParser.add_argument('--webhook-watchdog-interval', dest='webhook_watchdog_interval',default=int(os.getenv('RUMBLE_WEBHOOK_WATCHDOG_INTERVAL', 61)), help='Interval in seconds for the watchdog to check the connection', type=int)
 argParser.add_argument('--webhook-watchdog-up',       dest='webhook_watchdog_up',      default=os.getenv('RUMBLE_WEBHOOK_WATCHDOG_UP'),   help='URL to call periodically when connected')
 argParser.add_argument('--webhook-watchdog-down',     dest='webhook_watchdog_down',    default=os.getenv('RUMBLE_WEBHOOK_WATCHDOG_DOWN'), help='URL to call periodically when disconnected')
 
