@@ -72,14 +72,14 @@ def Watchdog():
 
 def WatchdogHTTPUpdate():
     if IsConnected.is_set():
-        if MyArgs.webhook_watchdog:
+        if MyArgs.webhook_watchdog_up:
             try:
                 response = requests.get(MyArgs.webhook_watchdog_up)
                 Log(f'Webhook watchdog UP response: {response.status_code} {response.text}')
             except requests.RequestException as e:
                 Log(f'Error calling watchdog UP webhook: {e}')
     else:
-        if MyArgs.webhook_watchdog:
+        if MyArgs.webhook_watchdog_down:
             try:
                 response = requests.get(MyArgs.webhook_watchdog_down)
                 Log(f'Webhook watchdog DOWN response: {response.status_code} {response.text}')
