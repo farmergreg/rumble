@@ -13,6 +13,7 @@ from pymumble_py3.constants import *
 from threading import Thread, Event
 import signal
 import requests
+import time
 
 argParser = argparse.ArgumentParser(prog='rumble',     description='rumble streams audio from your microphone input')
 argParser.add_argument('--cert-file', nargs='?',      dest='certfile',                 default=os.getenv('RUMBLE_CERTFILE'),              help='PEM encoded public key certificate')
