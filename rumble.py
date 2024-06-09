@@ -14,17 +14,20 @@ from threading import Thread, Event
 import signal
 import requests
 
-argParser = argparse.ArgumentParser(prog='rumble', description='rumble streams audio from your microphone input')
-argParser.add_argument('--cert-file', nargs='?',  dest='certfile',           default=os.getenv('RUMBLE_CERTFILE'),              help='PEM encoded public key certificate')
-argParser.add_argument('--cert-key',  nargs='?',  dest='certkey',            default=os.getenv('RUMBLE_CERTKEY'),               help='PEM encoded private key certificate')
-argParser.add_argument('--channel',   nargs='?',  dest='channel',            default=os.getenv('RUMBLE_CHANNEL'),               help='the channel to join')
-argParser.add_argument('--password',  nargs='?',  dest='password',           default=os.getenv('RUMBLE_PASSWORD', ''),          help='the server password')
-argParser.add_argument('--port',      nargs='?',  dest='port',               default=os.getenv('RUMBLE_PORT', 64738),           help='the server to connect to (default "64738")',                 type=int)
-argParser.add_argument('--server',    nargs='?',  dest='server',             default=os.getenv('RUMBLE_SERVER', 'localhost'),   help='the server to connect to (default "localhost")')
-argParser.add_argument('--username',              dest='username',           default=os.getenv('RUMBLE_USERNAME', 'rumble-bot'),help='the username of the client (default "rumble-bot")')
-argParser.add_argument('--min-rms',               dest='minRMS',             default=os.getenv('RUMBLE_MINRMS', 150),           help='minimum rms level required to transmit audio (default 150)', type=int)
-argParser.add_argument('--webhook-connect',       dest='webhook_connect',    default=os.getenv('RUMBLE_WEBHOOK_CONNECT'),       help='URL to GET on connect')
-argParser.add_argument('--webhook-disconnect',    dest='webhook_disconnect', default=os.getenv('RUMBLE_WEBHOOK_DISCONNECT'),    help='URL to GET on disconnect')
+argParser = argparse.ArgumentParser(prog='rumble',     description='rumble streams audio from your microphone input')
+argParser.add_argument('--cert-file', nargs='?',      dest='certfile',                 default=os.getenv('RUMBLE_CERTFILE'),              help='PEM encoded public key certificate')
+argParser.add_argument('--cert-key',  nargs='?',      dest='certkey',                  default=os.getenv('RUMBLE_CERTKEY'),               help='PEM encoded private key certificate')
+argParser.add_argument('--channel',   nargs='?',      dest='channel',                  default=os.getenv('RUMBLE_CHANNEL'),               help='the channel to join')
+argParser.add_argument('--password',  nargs='?',      dest='password',                 default=os.getenv('RUMBLE_PASSWORD', ''),          help='the server password')
+argParser.add_argument('--port',      nargs='?',      dest='port',                     default=os.getenv('RUMBLE_PORT', 64738),           help='the server to connect to (default "64738")',                 type=int)
+argParser.add_argument('--server',    nargs='?',      dest='server',                   default=os.getenv('RUMBLE_SERVER', 'localhost'),   help='the server to connect to (default "localhost")')
+argParser.add_argument('--username',                  dest='username',                 default=os.getenv('RUMBLE_USERNAME', 'rumble-bot'),help='the username of the client (default "rumble-bot")')
+argParser.add_argument('--min-rms',                   dest='minRMS',                   default=os.getenv('RUMBLE_MINRMS', 150),           help='minimum rms level required to transmit audio (default 150)', type=int)
+argParser.add_argument('--webhook-watchdog-interval', dest='webhook_watchdog_interval',default=int(os.getenv('RUMBLE_WEBHOOK_WATCHDOG_INTERVAL', 300)), help='Interval in seconds for the watchdog to check the connection', type=int)
+argParser.add_argument('--webhook-watchdog-up',       dest='webhook_watchdog_up',      default=os.getenv('RUMBLE_WEBHOOK_WATCHDOG_UP'),   help='URL to call periodically when connected')
+argParser.add_argument('--webhook-watchdog-down',     dest='webhook_watchdog_down',    default=os.getenv('RUMBLE_WEBHOOK_WATCHDOG_DOWN'), help='URL to call periodically when disconnected')
+
+
 
 ###############################################################################
 ## Global Variables
@@ -44,34 +47,44 @@ def OnCtrlC(signum, frame):
     ExitNowPlease.set()
 
 def OnConnected():
-        IsConnected.set()
-        Log(f'Connected to {MyArgs.server}:{MyArgs.port} as {MyArgs.username}')
+    IsConnected.set()
+    Log(f'Connected to {MyArgs.server}:{MyArgs.port} as {MyArgs.username}')
 
-        if MyArgs.channel != None:
-            mumble.channels.find_by_name(MyArgs.channel).move_in()
-            Log(f'Joined channel: {MyArgs.channel}')
+    if MyArgs.channel != None:
+        mumble.channels.find_by_name(MyArgs.channel).move_in()
+        Log(f'Joined channel: {MyArgs.channel}')
 
-        if MyArgs.webhook_connect:
-            try:
-                response = requests.get(MyArgs.webhook_connect)
-                Log(f'Webhook CONNECT response: {response.status_code} {response.text}')
-            except requests.RequestException as e:
-                Log(f'Error calling CONNECT webhook: {e}')
-
+    WatchdogHTTPUpdate()
 
 def OnDisconnected():
     IsConnected.clear()
     Log(f'Disconnected from {MyArgs.server}:{MyArgs.port}')
 
-    if MyArgs.webhook_disconnect:
-        try:
-            response = requests.get(MyArgs.webhook_disconnect)
-            Log(f'Webhook DISCONNECT response: {response.status_code} {response.text}')
-        except requests.RequestException as e:
-            Log(f'Error calling DISCONNECT webhook: {e}')
+    WatchdogHTTPUpdate()
 
     if not ExitNowPlease.is_set():
         Log('Attempting to reconnect...')
+
+def Watchdog():
+    while not ExitNowPlease.is_set():
+        time.sleep(MyArgs.webhook_watchdog_interval)
+        WatchdogHTTPUpdate()
+
+def WatchdogHTTPUpdate():
+    if IsConnected.is_set():
+        if MyArgs.webhook_watchdog:
+            try:
+                response = requests.get(MyArgs.webhook_watchdog_up)
+                Log(f'Webhook watchdog UP response: {response.status_code} {response.text}')
+            except requests.RequestException as e:
+                Log(f'Error calling watchdog UP webhook: {e}')
+    else:
+        if MyArgs.webhook_watchdog:
+            try:
+                response = requests.get(MyArgs.webhook_watchdog_down)
+                Log(f'Webhook watchdog DOWN response: {response.status_code} {response.text}')
+            except requests.RequestException as e:
+                Log(f'Error calling watchdog DOWN webhook: {e}')
 
 ###############################################################################
 ## Main Program
@@ -112,6 +125,10 @@ recordUntil = datetime.now()
 isTransmitting = False
 signal.signal(signal.SIGINT, OnCtrlC)
 signal.signal(signal.SIGTERM, OnCtrlC)
+
+watchdog_thread = Thread(target=Watchdog)
+watchdog_thread.start()
+
 while not ExitNowPlease.is_set():
     soundSample = stream.read(pyAudioBufferSize, exception_on_overflow=False)
     rms = audioop.rms(soundSample, 2) #paInt16 is 2 bytes wide
