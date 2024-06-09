@@ -30,9 +30,9 @@ options:
    --webhook-watchdog-interval WEBHOOK_WATCHDOG_INTERVAL
                          Interval in seconds for the watchdog to check the connection
    --webhook-watchdog-up WEBHOOK_WATCHDOG_UP
-                         URL to call periodically when connected
+                         URL to GET periodically when connected
    --webhook-watchdog-down WEBHOOK_WATCHDOG_DOWN
-                         URL to call periodically when disconnected
+                         URL to GET periodically when disconnected
 ````
 
 ## Environment Variables:
