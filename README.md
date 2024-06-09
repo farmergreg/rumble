@@ -11,24 +11,28 @@ Simple example:
 
 ## Command Line Options:
 ````
-usage: rumble [-h] [--cert-file [CERTFILE]] [--cert-key [CERTKEY]] [--channel [CHANNEL]] [--password [PASSWORD]] [--port [PORT]]
-              [--server [SERVER]] [--username USERNAME] [--min-rms MINRMS]
+usage: rumble [-h] [--cert-file [CERTFILE]] [--cert-key [CERTKEY]] [--channel [CHANNEL]] [--password [PASSWORD]] [--port [PORT]] [--server [SERVER]] [--username USERNAME] [--min-rms MINRMS]
+              [--webhook-watchdog-interval WEBHOOK_WATCHDOG_INTERVAL] [--webhook-watchdog-up WEBHOOK_WATCHDOG_UP] [--webhook-watchdog-down WEBHOOK_WATCHDOG_DOWN]
 
 rumble streams audio from your microphone input
 
-optional arguments:
-  -h, --help            show this help message and exit
-  --cert-file [CERTFILE]
-                        PEM encoded public key certificate
-  --cert-key [CERTKEY]  PEM encoded private key certificate
-  --channel [CHANNEL]   the channel to join
-  --password [PASSWORD] the server password
-  --port [PORT]         the server to connect to (default "64738")
-  --server [SERVER]     the server to connect to (default "localhost")
-  --username USERNAME   the username of the client (default "rumble-bot")
-  --min-rms MINRMS      minimum rms level required to transmit audio (default 150)
-  --webhook-connect     URL to GET on connect
-  --webhook-disconnect  URL to GET on disconnect
+options:
+   -h, --help            show this help message and exit
+   --cert-file [CERTFILE]
+                         PEM encoded public key certificate
+   --cert-key [CERTKEY]  PEM encoded private key certificate
+   --channel [CHANNEL]   the channel to join
+   --password [PASSWORD] the server password
+   --port [PORT]         the server to connect to (default "64738")
+   --server [SERVER]     the server to connect to (default "localhost")
+   --username USERNAME   the username of the client (default "rumble-bot")
+   --min-rms MINRMS      minimum rms level required to transmit audio (default 150)
+   --webhook-watchdog-interval WEBHOOK_WATCHDOG_INTERVAL
+                         Interval in seconds for the watchdog to check the connection
+   --webhook-watchdog-up WEBHOOK_WATCHDOG_UP
+                         URL to call periodically when connected
+   --webhook-watchdog-down WEBHOOK_WATCHDOG_DOWN
+                         URL to call periodically when disconnected
 ````
 
 ## Environment Variables:
@@ -44,8 +48,9 @@ RUMBLE_PORT=64738
 RUMBLE_SERVER=localhost
 RUMBLE_USERNAME=rumble-bot
 RUMBLE_MINRMS=150
-RUMBLE_WEBHOOK_CONNECT=
-RUMBLE_WEBHOOK_DISCONNECT=
+RUMBLE_WEBHOOK_WATCHDOG_INTERVAL=61
+RUMBLE_WEBHOOK_WATCHDOG_UP=
+RUMBLE_WEBHOOK_WATCHDOG_DOWN=
 ````
 
 # Installation
