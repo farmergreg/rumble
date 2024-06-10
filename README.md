@@ -1,15 +1,15 @@
-# Rumble de K9CTS
+# Rumble
 
 Rumble is a [mumble](https://www.mumble.info/) bot that streams audio from your microphone / line input.
 
-# Using
+## Quick Start
 
-Simple example:
+Example:
 ````
 ./rumble.py --username test-bot --server mumble --port 64738 --password OneBadPassword
 ````
 
-## Command Line Options:
+### Command Line Options:
 ````
 usage: rumble [-h] [--cert-file [CERTFILE]] [--cert-key [CERTKEY]] [--channel [CHANNEL]] [--password [PASSWORD]] [--port [PORT]] [--server [SERVER]] [--username USERNAME] [--min-rms MINRMS]
               [--webhook-watchdog-interval WEBHOOK_WATCHDOG_INTERVAL] [--webhook-watchdog-up WEBHOOK_WATCHDOG_UP] [--webhook-watchdog-down WEBHOOK_WATCHDOG_DOWN]
@@ -35,7 +35,7 @@ options:
                          URL to GET periodically when disconnected
 ````
 
-## Environment Variables:
+### Environment Variables:
 Command line parameters take precedence over environment variables.
 The following environment variables are supported:
 
@@ -53,7 +53,7 @@ RUMBLE_WEBHOOK_WATCHDOG_UP=
 RUMBLE_WEBHOOK_WATCHDOG_DOWN=
 ````
 
-# Installation
+## Installation
 
 You can use any computer that runs linux to run mumble.
 These instructions were tested with Raspberry PI OS Lite (Debian Bullseye with no desktop environment).
@@ -71,7 +71,7 @@ cd rumble
 ./rumble.py --username test-bot --server mumble --port 64738 --password OneBadPassword
 ````
 
-# Audio Card Configuration
+## Audio Card Configuration
 
 If rumble does not transmit any audio, it may be because your audio card isn't set to be the default card.
 To check the cards on your system run:
@@ -88,7 +88,7 @@ defaults.pcm.card 1
 defaults.ctl.card 1
 ````
 
-# SSL Key Creation
+## SSL Key Creation
 
 If you want to authenticate using SSL, here is one way to create a self-signed key pair.
 
@@ -96,24 +96,24 @@ If you want to authenticate using SSL, here is one way to create a self-signed k
 openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout private-cert-key.pem -out public-key-cert-file.pem
 ````
 
-# Starting Rumble Automatically
+## Starting Rumble Automatically
 
 There are many ways to accomplish starting up rumble when your computer boots.
 Here is one simple way:
 
-## 1) Install tmux:
+### 1) Install tmux:
 ````
 sudo apt install tmux
 ````
 
-## 2) Edit crontab
+### 2) Edit crontab
 Then edit your crontab and add this line (adjust the path to match where your copy of rumble is):
 
 ````
 @reboot /usr/bin/tmux new-session -d -s rumble-bot '/home/pi/rumble/rumble.py --username test-bot --server mumble --port 64738 --password YourServerPasswordGoesHere' >/dev/null 2>&1
 ````
 
-## 3) Reboot
+### 3) Reboot
 Reboot your computer.
 After rebooting, log in and check the output from your bot by running:
 
