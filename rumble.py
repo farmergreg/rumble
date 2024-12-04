@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # Copyright 2023 by Gregory L. Dietsche (K9CTS)
 # License: MIT
-MyVersion = 'v1.0.2'
+MyVersion = 'v1.0.3'
 
 import os
 import argparse
@@ -21,7 +21,7 @@ argParser.add_argument('--password',  nargs='?',  dest='password', default=os.ge
 argParser.add_argument('--port',      nargs='?',  dest='port',     default=os.getenv('RUMBLE_PORT', 64738),           help='the server to connect to (default "64738")',                 type=int)
 argParser.add_argument('--server',    nargs='?',  dest='server',   default=os.getenv('RUMBLE_SERVER', 'localhost'),   help='the server to connect to (default "localhost")')
 argParser.add_argument('--username',              dest='username', default=os.getenv('RUMBLE_USERNAME', 'rumble-bot'),help='the username of the client (default "rumble-bot")')
-argParser.add_argument('--min-rms',               dest='minRMS',   default=os.getenv('RUMBLE_MINRMS', 150),           help='minimum rms level required to transmit audio (default 150)', type=int)
+argParser.add_argument('--min-rms',               dest='minRMS',   default=os.getenv('RUMBLE_MINRMS', 200),           help='minimum rms level required to transmit audio (default 200)', type=int)
 
 ###############################################################################
 ## Global Variables
