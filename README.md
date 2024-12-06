@@ -26,7 +26,7 @@ options:
    --port [PORT]         the server to connect to (default "64738")
    --server [SERVER]     the server to connect to (default "localhost")
    --username USERNAME   the username of the client (default "rumble-bot")
-   --min-rms MINRMS      minimum rms level required to transmit audio (default 150)
+   --min-rms MINRMS      minimum rms level required to transmit audio (default 200)
    --webhook-watchdog-interval WEBHOOK_WATCHDOG_INTERVAL
                          Interval in seconds for the watchdog to check the connection
    --webhook-watchdog-up WEBHOOK_WATCHDOG_UP
